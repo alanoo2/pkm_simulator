@@ -68,6 +68,7 @@ class pokemon:
 
 # moves availables
 Tackle = movement("Tackle",35,"Normal")
+Ember = movement("Ember",40,"Fire")
 
 # pokes availables
 Bulbasaur = pokemon("Bulbasaur","Plant-Poison",10,10)
@@ -88,12 +89,26 @@ def battle(poke):   # function to simulate battles
         poke.show_moves()
         opc = int(input( ))
 
+       # you attack
         move = poke.moves[opc - 1]  # get the move object
         damage = opponent.max_life * (0.01 * move.power)
         opponent.curr_life -= damage
-       # opponent.curr_life = opponent.curr_life - (opponent.curr_life * (.01 * poke.moves[opc-1]) )
         print_words(f"Opponents current life is {opponent.curr_life}")
-        lolo = int( input( ) )
+        lolo = str( input( ) )
+
+        # ends battle if opponent's life is less than 0        
+        if opponent.curr_life < 0:
+            print(f"The winner is {poke}")
+            return
+       
+       # opponent attacks
+        opponent_atack = rdm.choice(opponent.moves)
+        print_words(f"Opponent {opponent} chooses {opponent_atack} ")
+        damage = poke.max_life * (0.01 * opponent_atack.power)
+        poke.curr_life -= damage
+        print_words(f"{poke} current life is {poke.curr_life}")
+        lolo = str( input( ) )
+
 
         if poke.curr_life < 0:
             print(f"The winner is {poke}")
